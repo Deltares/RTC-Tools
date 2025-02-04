@@ -9,8 +9,8 @@ from setuptools import find_packages, setup
 
 import versioneer
 
-if sys.version_info < (3, 8):
-    sys.exit("Sorry, Python 3.8 or newer is required.")
+if sys.version_info < (3, 9):
+    sys.exit("Sorry, Python 3.9 or newer is required.")
 
 DOCLINES = __doc__.split("\n")
 
@@ -50,13 +50,16 @@ setup(
         "pymoca >= 0.9.1, == 0.9.*",
         "rtc-tools-channel-flow >= 1.2.0",
         "defusedxml >= 0.7.0",
+        # Python 3.9's importlib.metadata does not support the "group" parameter
+        # to entry_points yet.
+        "importlib_metadata >= 5.0.0; python_version < '3.10'",
     ],
     tests_require=["pytest", "pytest-runner", "netCDF4"],
     extras_require={
         "netcdf": ["netCDF4"],
         "all": ["netCDF4"],
     },
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     cmdclass=versioneer.get_cmdclass(),
     entry_points={
         "console_scripts": [
